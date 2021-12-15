@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <title>Puras mamadas</title>
+</head>
+<body onload="verificarAcceso()">
+    <div style="margin-left: 90%;">
+        <button onclick="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+
+    <table id="Tabla1">
+        <thead>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Edad</th>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+        <label for="NombrePersona">Nombre</label>
+        <input type="text" name="NombrePersona" id="NombrePersona">
+        <label for="ApellidoPesona">Apellido</label>
+        <input type="text" name="ApellidoPesona" id="ApellidoPesona">
+        <label for="EdadPesona">Edad</label>
+        <input type="text" name="EdadPesona" id="EdadPesona">
+        <button type="button" onclick="AgregarFilaTabla1()">Agregar Fila</button> 
+
+    <script type="application/javascript">
+        var Tabla1 = document.getElementById("Tabla1");
+        var T1Tbody = Tabla1.getElementsByTagName("tbody")[0];
+        var txtNombre = document.getElementById("NombrePersona");
+        var txtApellido = document.getElementById("ApellidoPesona");
+        var txtEdad = document.getElementById("EdadPesona");
+        
+        // var fila1 = document.getElementById("row1");
+
+        // var StringArrayPropiedades = fila1.innerText;
+
+        // var ArrayPropiedades = StringArrayPropiedades.split('\t');
+
+        // var PropiedadesFila1 = {
+        //     Nombre: ArrayPropiedades[0],
+        //     Apellido: ArrayPropiedades[1],
+        //     Edad: parseInt(ArrayPropiedades[2])
+        // }
+
+        // function CambiarTextoEncabezado() {
+        //    Tabla1.childNodes[1].firstElementChild.cells[0].innerHTML = Inptext1.value;
+        // }
+
+        //document.getElementsByTagName("body").addEventListener("load", verificarAcceso);
+
+        function verificarAcceso() {
+            var StrObjUsuarioApp = localStorage.getItem("UsuarioApp");
+            if (StrObjUsuarioApp === null || StrObjUsuarioApp === undefined || StrObjUsuarioApp === ''){
+                window.location.replace(window.location.origin + '/login');
+            } else {
+                var ObjPersonaLogueada = JSON.parse(StrObjUsuarioApp);
+                console.log(ObjPersonaLogueada);
+            }
+        }
+
+        function AgregarFilaTabla1() {
+
+            fetch('http://localhost:1666/personas', {
+                method: 'GET',
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            }).then(resp => resp.json())
+            .catch(err => console.error("Ocurrio un error: ", err))
+            .then(data =>  crearFilas(data));
+        }
+
+        function crearFilas(filas) {
+            filas.forEach(element => {
+                var row = T1Tbody.insertRow(T1Tbody.rows.length);
+                var celda1 = row.insertCell(0);
+                var celda2 = row.insertCell(1);
+                var celda3 = row.insertCell(2);
+
+                var textNodeC1 = document.createTextNode(element.Nombre);
+                var textNodeC2 = document.createTextNode(element.Apellido);
+                var textNodeC3 = document.createTextNode(element.Edad);
+
+                celda1.appendChild(textNodeC1);
+                celda2.appendChild(textNodeC2);
+                celda3.appendChild(textNodeC3);
+            });
+            ShowNotification();
+        }
+
+        function ShowNotification() {
+            if(!("Notification" in window)) {
+                alert("No soporta notificaciones");
+            } else {
+                Notification.requestPermission(function(permiso){
+                    if (permiso === "granted") {
+                        var notificacion = new Notification("Hola hijos de su perra madre");
+                    } 
+                });
+            }
+        }
+
+        function cerrarSesion() {
+            localStorage.clear();
+            window.location.reload();
+        }
+
+    </script>
+</body>
+</html>

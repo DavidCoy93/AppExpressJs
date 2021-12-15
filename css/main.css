@@ -1,0 +1,18 @@
+table {
+    border-collapse: collapse;
+    border-color: black;
+}
+
+table th {
+    background-color: red;
+    text-align: center;
+}
+
+table tr {
+    background-color: yellow;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+table tr:hover {
+    background-color: blue;
+}

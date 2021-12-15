@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <title>Iniciar sesión</title>
+</head>
+<body>
+    <div>
+        <label for="usuario">Ingrese usuario</label>
+        <input type="text" name="usuario" id="usuario">
+    </div>
+    <div>
+        <label for="psw">Ingrese su contraseña</label>
+        <input type="password" name="psw" id="psw">
+    </div>
+    <div>
+        <button onclick="login()">Iniciar sesión</button>
+    </div>  	
+
+    <script type="application/javascript">
+
+        function login() {
+            var inpUser = document.getElementById("usuario").value;
+            var inpPass = document.getElementById("psw").value;
+
+            var ObjParam = {
+                User: inpUser,
+                Pass: inpPass
+            };
+
+            fetch(window.location.origin + '/iniciar', {
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(ObjParam) 
+            }).then(
+                resp => resp.json()
+            ).catch(
+                err => console.log('ocurrio un error', err)
+            ).then(
+                data => MenuPrincipal(data)
+            )
+        }
+
+        function MenuPrincipal(Usuario) {
+            if(Usuario.Existe) {
+                localStorage.setItem('UsuarioApp', JSON.stringify(Usuario));
+                window.location.replace(window.location.origin);
+            } else {
+                alert("El usuario no existe o verifique los datos");
+            }
+        }
+
+    </script>
+</body>
+</html>
