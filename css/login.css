@@ -1,4 +1,22 @@
-div {
-    margin-left: auto;
-    margin-right: auto;
+.CentrarDiv {
+    margin: auto;
+    width: 100%;
+}
+
+.CentrarDiv div {
+    margin: auto;
+    width: 20%;
+    border: 2px solid black;
+}
+
+.CentrarDiv div input {
+    width: 97.5%;
+    background-color: lightyellow;
+}
+
+.CentrarDiv div button {
+    margin: auto;
+    width: 100%;
+    background-color: lawngreen;
+    border-radius: 10px;
 }

@@ -8,42 +8,55 @@
     <title>Iniciar sesión</title>
 </head>
 <body>
-    <div>
-        <label for="usuario">Ingrese usuario</label>
-        <input type="text" name="usuario" id="usuario">
+    <div class="CentrarDiv">
+        <div>
+            <label for="usuario">Ingrese usuario</label>
+            <input type="text" name="usuario" id="usuario">
+        </div>
+        <div>
+            <label for="psw">Ingrese su contraseña</label>
+            <input type="password" name="psw" id="psw">
+        </div>
+        <div>
+            <button onclick="login()">Iniciar sesión</button>	
+        </div>
     </div>
-    <div>
-        <label for="psw">Ingrese su contraseña</label>
-        <input type="password" name="psw" id="psw">
-    </div>
-    <div>
-        <button onclick="login()">Iniciar sesión</button>
-    </div>  	
-
+    
     <script type="application/javascript">
 
         function login() {
             var inpUser = document.getElementById("usuario").value;
             var inpPass = document.getElementById("psw").value;
 
-            var ObjParam = {
-                User: inpUser,
-                Pass: inpPass
-            };
+            if(inpUser === null || inpUser === '' || inpUser === undefined)
+            {
+                var focusedInpUser = document.getElementById("usuario");
+                focusedInpUser.focus();
+                ShowNotification("No sea wey y escriba un usuario");
+            } else if (inpPass === null || inpPass === '' || inpPass === undefined) {
+                var focusedInpPass = document.getElementById("psw");
+                focusedInpPass.focus();
+                ShowNotification("No sea wey y escriba la contraseña");
+            } else {
+                var ObjParam = {
+                    User: inpUser,
+                    Pass: inpPass
+                };
 
-            fetch(window.location.origin + '/iniciar', {
-                method: 'POST',
-                headers:{
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(ObjParam) 
-            }).then(
-                resp => resp.json()
-            ).catch(
-                err => console.log('ocurrio un error', err)
-            ).then(
-                data => MenuPrincipal(data)
-            )
+                fetch(window.location.origin + '/iniciar', {
+                    method: 'POST',
+                    headers:{
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(ObjParam) 
+                }).then(
+                    resp => resp.json()
+                ).catch(
+                    err => console.log('ocurrio un error', err)
+                ).then(
+                    data => MenuPrincipal(data)
+                )
+            }
         }
 
         function MenuPrincipal(Usuario) {
@@ -52,6 +65,18 @@
                 window.location.replace(window.location.origin);
             } else {
                 alert("El usuario no existe o verifique los datos");
+            }
+        }
+
+        function ShowNotification(mensaje) {
+            if(!("Notification" in window)) {
+                alert("No soporta notificaciones");
+            } else {
+                Notification.requestPermission(function(permiso){
+                    if (permiso === "granted") {
+                        var notificacion = new Notification(mensaje);
+                    } 
+                });
             }
         }
 
