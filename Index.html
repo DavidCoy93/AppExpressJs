@@ -17,6 +17,7 @@
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Edad</th>
+            <th>TipoDePersona</th>
         </thead>
         <tbody>
         </tbody>
@@ -28,7 +29,7 @@
         <input type="text" name="ApellidoPesona" id="ApellidoPesona">
         <label for="EdadPesona">Edad</label>
         <input type="text" name="EdadPesona" id="EdadPesona">
-        <button type="button" onclick="AgregarFilaTabla1()">Agregar Fila</button> 
+        <button type="button">Agregar Fila</button> 
 
     <script type="application/javascript">
         var Tabla1 = document.getElementById("Tabla1");
@@ -36,6 +37,7 @@
         var txtNombre = document.getElementById("NombrePersona");
         var txtApellido = document.getElementById("ApellidoPesona");
         var txtEdad = document.getElementById("EdadPesona");
+        var Usuarios = [];
         
         // var fila1 = document.getElementById("row1");
 
@@ -62,10 +64,12 @@
             } else {
                 var ObjPersonaLogueada = JSON.parse(StrObjUsuarioApp);
                 console.log(ObjPersonaLogueada);
+                CargarDatos();
+                ShowNotification();
             }
         }
 
-        function AgregarFilaTabla1() {
+        function CargarDatos() {
 
             fetch('http://localhost:1666/personas', {
                 method: 'GET',
@@ -78,21 +82,26 @@
         }
 
         function crearFilas(filas) {
-            filas.forEach(element => {
+            Usuarios = filas.Usuarios;
+            filas.Usuarios.forEach(element => {
                 var row = T1Tbody.insertRow(T1Tbody.rows.length);
                 var celda1 = row.insertCell(0);
                 var celda2 = row.insertCell(1);
                 var celda3 = row.insertCell(2);
+                var celda4 = row.insertCell(3);
+
+                var TipoPersona = (element.VaAPistearHoy === true ? "A toda madre" : "Es culo");
 
                 var textNodeC1 = document.createTextNode(element.Nombre);
                 var textNodeC2 = document.createTextNode(element.Apellido);
                 var textNodeC3 = document.createTextNode(element.Edad);
+                var textNodeC4 = document.createTextNode(TipoPersona);
 
                 celda1.appendChild(textNodeC1);
                 celda2.appendChild(textNodeC2);
                 celda3.appendChild(textNodeC3);
+                celda4.appendChild(textNodeC4);
             });
-            ShowNotification();
         }
 
         function ShowNotification() {

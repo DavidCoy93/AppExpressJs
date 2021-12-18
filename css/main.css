@@ -1,18 +1,20 @@
 table {
-    border-collapse: collapse;
-    border-color: black;
+    border: 2px solid #0000;
 }
 
 table th {
     background-color: red;
     text-align: center;
+    border: 2px solid #0000;
 }
 
 table tr {
     background-color: yellow;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', 'sans-serif';
+    border: 2px solid #0000;
 }
 
 table tr:hover {
     background-color: blue;
+    border: 2px solid #0000;
 }

@@ -4,6 +4,12 @@ const path = require('path');
 const router = express.Router();
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const fs = require('fs');
+
+
+let usersData = fs.readFileSync(path.join(__dirname, '/Usuarios.json'));
+let ObjUsers = JSON.parse(usersData);
+console.log(ObjUsers);
 
 router.get('/', function(req, res){
     res.sendFile(path.join(__dirname + '/Index.html'));
@@ -14,42 +20,34 @@ router.get('/login', function(req, res){
 });
 
 router.get('/personas', function(req, res){
-    var PersonaList = [
-        {
-            Nombre: "Robert",
-            Apellido: "Garcia",
-            Edad: 46
-        },
-        {
-            Nombre: "Ramon",
-            Apellido: "Ayala",
-            Edad: 69
-        },
-    ];
-    res.send(PersonaList);
+    res.send(ObjUsers);
 });
 
 var jsonParser = bodyParser.json();
 
 router.post('/iniciar', jsonParser, function(req, res){
     console.log(req.body);
-    res.setHeader('Content-Type', 'application/json');
-    if (req.body.User === 'Mario' && req.body.Pass === 'abc123') {
-        var ObjPersonaCorrecto = {
-            User: req.body.User,
-            Pass: req.body.Pass,
-            Existe: true
-        };
-        res.send(ObjPersonaCorrecto);
-        console.log("Acceso correcto");
-    } else {
-        var ObjPersonaError = {
-            User: null,
-            Pass: null,
-            Existe: false
-        };
-        res.send(ObjPersonaError);
-        console.log("El usuario no existe");
+    for (let i = 0; i < ObjUsers.Usuarios.length; i++) {
+        if (ObjUsers.Usuarios[i].Nombre === req.body.User && ObjUsers.Usuarios[i].Password === req.body.Pass && ObjUsers.Usuarios[i].VaAPistearHoy === true) {
+            console.log("Entre al if");
+            var ObjPersonaCorrecto = {
+                User: req.body.User,
+                Pass: req.body.Pass,
+                Existe: true
+            };
+            res.send(ObjPersonaCorrecto);
+            console.log("Acceso correcto");
+            break;
+        } else {
+            console.log("No entre al if");
+            var ObjPersonaError = {
+                User: null,
+                Pass: null,
+                Existe: false
+            };
+            res.send(ObjPersonaError);
+            console.log("El usuario no existe");
+        }
     }
 });
 

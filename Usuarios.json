@@ -1,0 +1,28 @@
+{
+    "Usuarios":[
+        {
+            "Nombre": "David",
+            "Apellido": "Alvarado",
+            "Edad": 28,
+            "BebidaFavorita": "Wamas",
+            "VaAPistearHoy": true,
+            "Password": "caguaman"
+        },
+        {
+            "Nombre": "Mauro",
+            "Apellido": "Quiroz",
+            "Edad": 28,
+            "BebidaFavorita": "Wamas",
+            "VaAPistearHoy": true,
+            "Password": "maurowamas"
+        },
+        {
+            "Nombre": "Brayan",
+            "Apellido": "Ortiz",
+            "Edad": 27,
+            "BebidaFavorita": "Ron",
+            "VaAPistearHoy": false,
+            "Password": "pinchecarito"
+        }
+    ]
+}

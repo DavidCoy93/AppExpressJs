@@ -9,11 +9,11 @@
 </head>
 <body>
     <div class="CentrarDiv">
-        <div>
+        <div id="divInpUser">
             <label for="usuario">Ingrese usuario</label>
             <input type="text" name="usuario" id="usuario">
         </div>
-        <div>
+        <div id="divInpPass">
             <label for="psw">Ingrese su contraseña</label>
             <input type="password" name="psw" id="psw">
         </div>
@@ -24,19 +24,56 @@
     
     <script type="application/javascript">
 
+        var ElementDivUser = document.getElementById("divInpUser");
+        var ElementDivPass = document.getElementById("divInpPass");
+        var ElementUser = document.getElementById("usuario");
+        var ElementPass = document.getElementById("psw");
+
+        this.inpUser = "";
+        this.inpPass = "";
+
+        var ValidatorTxtUser = document.createElement("p");
+        var TextValUser = document.createTextNode("No sea wey e ingrese un usuario");
+        ValidatorTxtUser.appendChild(TextValUser);
+        
+        var validatorPass = document.createElement("p");
+        var TextValPass = document.createTextNode("No sea wey e ingrese una contraseña");
+        validatorPass.appendChild(TextValPass);
+
+        ElementUser.addEventListener("input", function(){
+            inpUser = ElementUser.value;
+            if(inpUser === null || inpUser === '' || inpUser === undefined){
+                ElementUser.after(ValidatorTxtUser);
+            } else {
+                console.log(ValidatorTxtUser.parentNode);
+                ElementDivUser.removeChild(ValidatorTxtUser);
+            }
+        });
+
+        ElementPass.addEventListener("input", function() {
+            inpPass = ElementPass.value;
+            if (inpPass === null || inpPass === '' || inpPass === undefined) {
+                ElementPass.after(validatorPass);
+            } else {
+                console.log(validatorPass.parentNode);
+                ElementDivPass.removeChild(validatorPass);
+            }
+        });
+
         function login() {
-            var inpUser = document.getElementById("usuario").value;
-            var inpPass = document.getElementById("psw").value;
 
             if(inpUser === null || inpUser === '' || inpUser === undefined)
             {
                 var focusedInpUser = document.getElementById("usuario");
                 focusedInpUser.focus();
-                ShowNotification("No sea wey y escriba un usuario");
+                ElementDivUser.appendChild(ValidatorTxtUser);
+                ElementUser.after(ValidatorTxtUser);
+                
             } else if (inpPass === null || inpPass === '' || inpPass === undefined) {
                 var focusedInpPass = document.getElementById("psw");
                 focusedInpPass.focus();
-                ShowNotification("No sea wey y escriba la contraseña");
+                ElementDivPass.appendChild(validatorPass);
+                ElementPass.after(validatorPass);
             } else {
                 var ObjParam = {
                     User: inpUser,
