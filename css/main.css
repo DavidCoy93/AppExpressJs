@@ -1,20 +1,120 @@
-table {
-    border: 2px solid #0000;
+* {
+    box-sizing: border-box;
 }
 
-table th {
+body {
+    background-color: whitesmoke;
+}
+
+.TablaPrincipal {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-top: 3%;
+    width: 60%;
+}
+
+.TablaPrincipal table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.TablaPrincipal thead {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+.TablaPrincipal tbody {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+}
+
+.TablaPrincipal th {
     background-color: red;
     text-align: center;
-    border: 2px solid #0000;
+    color: black;
 }
 
-table tr {
-    background-color: yellow;
+.NormalRow {
+    background-color: whitesmoke;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', 'sans-serif';
+}
+
+.NormalRow:hover {
+    background-color: blue;
+    cursor: pointer;
+}
+
+.TablaPrincipal td {
+    text-align: center;
+    color: black;
+    font-weight: bold;
+}
+
+.infoUser {
+    margin: auto;
+    width: 100%;
+}
+
+.infoUser p {
+    background-color: aquamarine;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin: auto;
+}
+
+.infoUser button {
+    background-color: lightseagreen;
+    color: black;
+    text-align: center;
+    border-radius: 15px;
+    margin: auto;
+    float: right;
+    cursor: pointer;
+}
+
+.SelectedRow {
+    background-color: orange;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', 'sans-serif';
     border: 2px solid #0000;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
 }
 
-table tr:hover {
-    background-color: blue;
-    border: 2px solid #0000;
+.FormUsuario {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-top: 2%;
+    width: 60%;
+    display: grid;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 5px;
+    background-color: #aaaa;
 }
+
+.FormUsuario input[type=text] {
+    padding: 5px;
+    border-radius: 5px;
+    background-color: whitesmoke;
+    width: 100%;
+}
+
+.FormUsuario button {
+    box-shadow: lightslategray;
+    background-color: limegreen;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.FormUsuario button:hover {
+    cursor: pointer;
+}
+

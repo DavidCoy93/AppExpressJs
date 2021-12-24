@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="login.css">
+    <link rel="manifest" href="manifest.json">
     <title>Iniciar sesión</title>
 </head>
 <body>
@@ -29,34 +30,51 @@
         var ElementUser = document.getElementById("usuario");
         var ElementPass = document.getElementById("psw");
 
+
         this.inpUser = "";
         this.inpPass = "";
 
         var ValidatorTxtUser = document.createElement("p");
         var TextValUser = document.createTextNode("No sea wey e ingrese un usuario");
         ValidatorTxtUser.appendChild(TextValUser);
+        ElementDivUser.appendChild(ValidatorTxtUser);
+        ElementUser.after(ValidatorTxtUser);
+        ValidatorTxtUser.style.display = 'none';
         
         var validatorPass = document.createElement("p");
         var TextValPass = document.createTextNode("No sea wey e ingrese una contraseña");
         validatorPass.appendChild(TextValPass);
+        ElementDivPass.appendChild(validatorPass);
+        ElementPass.after(validatorPass);
+        validatorPass.style.display = 'none';
+
+        // chrome.webRequest.onBeforeRequest.addListener(
+        //     function(e) {
+        //         alert("onBeforeRequest")
+        //     },
+        //     {
+        //         urls: ["http://*/*", 
+        //                "https://*/*"
+        //         ]
+        //     }, 
+        //     ["blocking"]
+        // );
 
         ElementUser.addEventListener("input", function(){
             inpUser = ElementUser.value;
             if(inpUser === null || inpUser === '' || inpUser === undefined){
-                ElementUser.after(ValidatorTxtUser);
+                ValidatorTxtUser.style.display = 'block';
             } else {
-                console.log(ValidatorTxtUser.parentNode);
-                ElementDivUser.removeChild(ValidatorTxtUser);
+                ValidatorTxtUser.style.display = 'none';
             }
         });
 
         ElementPass.addEventListener("input", function() {
             inpPass = ElementPass.value;
             if (inpPass === null || inpPass === '' || inpPass === undefined) {
-                ElementPass.after(validatorPass);
+                validatorPass.style.display = 'block';
             } else {
-                console.log(validatorPass.parentNode);
-                ElementDivPass.removeChild(validatorPass);
+                validatorPass.style.display = 'none';
             }
         });
 
@@ -66,14 +84,13 @@
             {
                 var focusedInpUser = document.getElementById("usuario");
                 focusedInpUser.focus();
-                ElementDivUser.appendChild(ValidatorTxtUser);
-                ElementUser.after(ValidatorTxtUser);
-                
+                ValidatorTxtUser.style.display = 'block';
+
             } else if (inpPass === null || inpPass === '' || inpPass === undefined) {
                 var focusedInpPass = document.getElementById("psw");
                 focusedInpPass.focus();
-                ElementDivPass.appendChild(validatorPass);
-                ElementPass.after(validatorPass);
+                validatorPass.style.display = 'block';
+
             } else {
                 var ObjParam = {
                     User: inpUser,

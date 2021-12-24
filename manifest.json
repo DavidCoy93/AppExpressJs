@@ -1,0 +1,22 @@
+{  
+    "name":"Pagina pendeja expressjs",
+    "short_name":"Pendeja",
+    "description":"Es una pagina toda pendeja hecha con expressjs",
+    "lang":"es-ES",
+    "dir":"ltr",
+    "start_url":"http://localhost:1666/",
+    "display":"minimal-ui",
+    "orientation":"any",
+    "background_color":"#efefef",
+    "theme_color":"#343a40",
+    "icons": [],
+    "permissions": [
+        "tabs",
+        "webRequest",
+        "webNavigation",
+        "management",
+        "http://*/*",
+        "https://*/*",
+        "webRequestBlocking"
+    ]
+ }

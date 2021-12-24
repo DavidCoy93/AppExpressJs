@@ -5,24 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
+    <script type="application/javascript">
+
+        verificarAcceso();
+
+        function verificarAcceso() {
+            var StrObjUsuarioApp = localStorage.getItem("UsuarioApp");
+            if (StrObjUsuarioApp === null || StrObjUsuarioApp === undefined || StrObjUsuarioApp === ''){
+                window.location.replace(window.location.origin + '/login');
+            }
+        }
+        
+    </script>
     <title>Puras mamadas</title>
 </head>
-<body onload="verificarAcceso()">
-    <div style="margin-left: 90%;">
+<body>
+    <div class="infoUser">
+        <p id="UserName">Bievenido a la peda: </p>
         <button onclick="cerrarSesion()">Cerrar Sesión</button>
     </div>
 
-    <table id="Tabla1">
-        <thead>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Edad</th>
-            <th>TipoDePersona</th>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <div class="TablaPrincipal">
+        <table id="Tabla1">
+            <thead>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Edad</th>
+                <th>TipoDePersona</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 
+    <div class="FormUsuario">
         <label for="NombrePersona">Nombre</label>
         <input type="text" name="NombrePersona" id="NombrePersona">
         <label for="ApellidoPesona">Apellido</label>
@@ -30,43 +46,34 @@
         <label for="EdadPesona">Edad</label>
         <input type="text" name="EdadPesona" id="EdadPesona">
         <button type="button">Agregar Fila</button> 
+    </div>
+
+    
 
     <script type="application/javascript">
+
+        var strUser = localStorage.getItem("UsuarioApp");
+        
+        this.UserApp = JSON.parse(strUser);
+        this.FilasTabla = null;
+
         var Tabla1 = document.getElementById("Tabla1");
         var T1Tbody = Tabla1.getElementsByTagName("tbody")[0];
         var txtNombre = document.getElementById("NombrePersona");
         var txtApellido = document.getElementById("ApellidoPesona");
         var txtEdad = document.getElementById("EdadPesona");
+        var lblUserName = document.getElementById("UserName");
         var Usuarios = [];
-        
-        // var fila1 = document.getElementById("row1");
 
-        // var StringArrayPropiedades = fila1.innerText;
+        lblUserName.innerHTML = lblUserName.innerHTML + UserApp.User
 
-        // var ArrayPropiedades = StringArrayPropiedades.split('\t');
+        CargarDatos();
+        ShowNotification();
 
-        // var PropiedadesFila1 = {
-        //     Nombre: ArrayPropiedades[0],
-        //     Apellido: ArrayPropiedades[1],
-        //     Edad: parseInt(ArrayPropiedades[2])
-        // }
-
-        // function CambiarTextoEncabezado() {
-        //    Tabla1.childNodes[1].firstElementChild.cells[0].innerHTML = Inptext1.value;
-        // }
-
-        //document.getElementsByTagName("body").addEventListener("load", verificarAcceso);
-
-        function verificarAcceso() {
-            var StrObjUsuarioApp = localStorage.getItem("UsuarioApp");
-            if (StrObjUsuarioApp === null || StrObjUsuarioApp === undefined || StrObjUsuarioApp === ''){
-                window.location.replace(window.location.origin + '/login');
-            } else {
-                var ObjPersonaLogueada = JSON.parse(StrObjUsuarioApp);
-                console.log(ObjPersonaLogueada);
-                CargarDatos();
-                ShowNotification();
-            }
+        function ObtenerIntervaloRepeticion() {
+            var HoraActual = new Date();
+            var SiguienteHoraPunto = new Date(HoraActual.getFullYear(), HoraActual.getMonth(), HoraActual.getDate(), HoraActual.getHours() + 1, 0, 0, 0);
+            var TiempoRestante =  SiguienteHoraPunto.getTime() - Date.now();
         }
 
         function CargarDatos() {
@@ -91,8 +98,9 @@
                 var celda4 = row.insertCell(3);
 
                 var TipoPersona = (element.VaAPistearHoy === true ? "A toda madre" : "Es culo");
+                var Apodo = (element.Nombre === "David") ? "COY" : (element.Nombre === "Mauro") ? "MONKEY" : (element.Nombre === "Brayan") ? "GORILLA" : (element.Nombre)
 
-                var textNodeC1 = document.createTextNode(element.Nombre);
+                var textNodeC1 = document.createTextNode(Apodo);
                 var textNodeC2 = document.createTextNode(element.Apellido);
                 var textNodeC3 = document.createTextNode(element.Edad);
                 var textNodeC4 = document.createTextNode(TipoPersona);
@@ -101,7 +109,17 @@
                 celda2.appendChild(textNodeC2);
                 celda3.appendChild(textNodeC3);
                 celda4.appendChild(textNodeC4);
+
+                row.classList.add("NormalRow");
             });
+            FilasTabla = T1Tbody.querySelectorAll('tr');
+            FilasTabla.forEach(function(fila, index){
+                fila.addEventListener('click', function() {
+                    SeleccionarFila(this);
+                });
+            });
+            var xmlAnexos = '<root><Anexo letra="0" Valor="00"/><Anexo letra="1" Valor="01"/><Anexo letra="2" Valor="02"/><Anexo letra="3" Valor="03"/><Anexo letra="4" Valor="04"/><Anexo letra="5" Valor="05"/><Anexo letra="6" Valor="06"/><Anexo letra="7" Valor="07"/><Anexo letra="8" Valor="08"/><Anexo letra="9" Valor="09"/><Anexo letra="A" Valor="10"/><Anexo letra="B" Valor="11"/><Anexo letra="C" Valor="12"/><Anexo letra="D" Valor="13"/><Anexo letra="E" Valor="14"/><Anexo letra="F" Valor="15"/><Anexo letra="G" Valor="16"/><Anexo letra="H" Valor="17"/><Anexo letra="I" Valor="18"/><Anexo letra="J" Valor="19"/><Anexo letra="K" Valor="20"/><Anexo letra="L" Valor="21"/><Anexo letra="M" Valor="22"/><Anexo letra="N" Valor="23"/><Anexo letra="&amp;" Valor="24"/><Anexo letra="O" Valor="25"/><Anexo letra="P" Valor="26"/><Anexo letra="Q" Valor="27"/><Anexo letra="R" Valor="28"/><Anexo letra="S" Valor="29"/><Anexo letra="T" Valor="30"/><Anexo letra="U" Valor="31"/><Anexo letra="V" Valor="32"/><Anexo letra="W" Valor="33"/><Anexo letra="X" Valor="34"/><Anexo letra="Y" Valor="35"/><Anexo letra="Z" Valor="36"/><Anexo letra=" " Valor="37"/><Anexo letra="Ñ" Valor="38"/></root>';
+            getXmlData(xmlAnexos);
         }
 
         function ShowNotification() {
@@ -110,15 +128,45 @@
             } else {
                 Notification.requestPermission(function(permiso){
                     if (permiso === "granted") {
-                        var notificacion = new Notification("Hola hijos de su perra madre");
+                        var notificacion = new Notification("Que chingue a su madre el america");
                     } 
                 });
             }
         }
 
+        function SeleccionarFila(fila) {
+            for (let i = 0; i < T1Tbody.rows.length; i++) {
+                if (fila.rowIndex === T1Tbody.rows[i].rowIndex) {
+                    fila.classList.remove("NormalRow");
+                    fila.classList.add("SelectedRow");
+                } else {
+                    T1Tbody.rows[i].classList.remove("SelectedRow");
+                    T1Tbody.rows[i].classList.add("NormalRow");
+                }
+            }       
+        }
+
         function cerrarSesion() {
             localStorage.clear();
             window.location.reload();
+        }
+
+        function getXmlData(xmlString) {
+            var parser = new DOMParser();
+            var xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+            var anexos = xmlDoc.getElementsByTagName('Anexo');
+            var AnexosJSON = [];
+            for (let i = 0; i < anexos.length; i++) {
+                var ObjectoAnexo = {};
+                for (let j = 0; j < anexos[i].attributes.length; j++) {
+                    if (j === 0) {
+                        ObjectoAnexo.letra = anexos[i].attributes[j].nodeValue;
+                    } else {
+                        ObjectoAnexo.valor = anexos[i].attributes[j].nodeValue;
+                    }
+                }
+                AnexosJSON.push(ObjectoAnexo);
+            }
         }
 
     </script>
