@@ -56,6 +56,7 @@
         
         this.UserApp = JSON.parse(strUser);
         this.FilasTabla = null;
+        this.SelectedUser = null;
 
         var Tabla1 = document.getElementById("Tabla1");
         var T1Tbody = Tabla1.getElementsByTagName("tbody")[0];
@@ -139,6 +140,8 @@
                 if (fila.rowIndex === T1Tbody.rows[i].rowIndex) {
                     fila.classList.remove("NormalRow");
                     fila.classList.add("SelectedRow");
+                    SelectedUser = ConvertRowToObject(fila.innerText);
+                    SetValuesInput(SelectedUser);
                 } else {
                     T1Tbody.rows[i].classList.remove("SelectedRow");
                     T1Tbody.rows[i].classList.add("NormalRow");
@@ -167,6 +170,22 @@
                 }
                 AnexosJSON.push(ObjectoAnexo);
             }
+        }
+
+        function SetValuesInput(User) {
+            txtNombre.value = User.Nombre;
+            txtApellido.value =  User.Apellido;
+            txtEdad.value = User.Edad;
+        }
+
+        function ConvertRowToObject(UserInfo) {
+            var SplitInfo = UserInfo.split('\t');
+            var UserSelect = {
+                Nombre: SplitInfo[0],
+                Apellido: SplitInfo[1],
+                Edad: parseInt(SplitInfo[2]) 
+            };
+            return UserSelect;
         }
 
     </script>

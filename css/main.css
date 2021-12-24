@@ -107,6 +107,10 @@ body {
     width: 100%;
 }
 
+.FormUsuario input[type=text]:focus {
+    background-color: yellow;
+}
+
 .FormUsuario button {
     box-shadow: lightslategray;
     background-color: limegreen;
