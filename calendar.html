@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="libs/fullcalendar-5.10.1/lib/main.css">
+    <link rel="stylesheet" href="libs/flatpickr/flatpickr.min.css">
+    <link rel="stylesheet" href="css/calendario.css">
+    <script src="libs/fullcalendar-5.10.1/lib/main.js"></script>
+    <script src="libs/fullcalendar-5.10.1/lib/locales/es-us.js"></script>
+    <script src="libs/flatpickr/flatpickr.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarElement = document.getElementById("calendar");
+            var eleFechaIni = document.getElementById("FechaIni");
+            var eleFechaFin = document.getElementById("FechaFin");
+            var tituloEvento = document.getElementById('Titulo');
+            var btnAddEvent = document.getElementById('btnAgregar');
+            var chkAllDay = document.getElementById('TodoElDia');
+            var SelectedColor = document.getElementById('ColorEvent');
+            var Id = 0;
+
+            eleFechaFin.disabled = true;
+
+            var pickFechaIni = flatpickr(eleFechaIni, {
+                enableTime: true,
+                onOpen: function() {
+                    if (pickFechaFin.config.minDate === null || pickFechaFin.config.minDate === undefined) {
+                        pickFechaIni.config.minDate = new Date();
+                    } else {
+                        pickFechaIni.config.minDate = pickFechaFin.config.minDate;
+                        pickFechaFin.config.minDate = undefined;
+                    }
+                },
+                onChange: function() {
+                    eleFechaFin.disabled = false;
+                    var FecFinMin = new Date(eleFechaIni.value);
+                    pickFechaFin.config.minDate = new Date(FecFinMin.getFullYear(), FecFinMin.getMonth(), FecFinMin.getDate(), FecFinMin.getHours() + 1, FecFinMin.getMinutes());
+                }
+            });
+
+            var pickFechaFin = flatpickr(eleFechaFin, {
+                enableTime: true
+            });
+
+            chkAllDay.addEventListener('click', function(){
+                if (chkAllDay.checked) {
+                    eleFechaFin.disabled = true;
+                    eleFechaFin.value = '';
+                } else {
+                    eleFechaFin.disabled = false;
+                }
+            });
+
+            function resetFields() {
+                pickFechaIni.config.minDate = undefined;
+                chkAllDay.checked = false;
+                eleFechaIni.value = '';
+                eleFechaFin.value = '';
+                tituloEvento.value = '';
+                SelectedColor.value = '#000000'
+            }
+
+            var calendar = new FullCalendar.Calendar(calendarElement, {
+                initialView: "dayGridMonth",
+                selectable: true,
+                headerToolbar: {
+                    left: 'prev,next',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                locale: 'es',
+                timeZone: 'local',
+                eventAdd: function(EventoAgregado){
+                    var Eventos = calendar.getEvents();
+                    if(Eventos.length > 1) {
+                        Eventos.splice(Eventos.length - 1, 1);
+                        Eventos.forEach(evento => {
+                            if(evento.title === EventoAgregado.event.title){
+                                EventoAgregado.revert();
+                                alert("Ya existe un evento con el mismo nombre");
+                            }
+                        });
+                    }
+                    resetFields();
+                },
+                eventClick: function(EventoSeleccionado) {
+                    if(confirm("¿Esta seguro de eliminar el evento?")) {
+                        EventoSeleccionado.event.remove();
+                    } else {
+                        alert("Esta bien pendejo culebra");
+                    }
+                }
+
+            });
+            calendar.render();
+
+            
+            
+            btnAddEvent.addEventListener("click", function() {
+                if (eleFechaIni.value === ''){
+                    alert("Seleccione una fecha de inicio");
+                } else if (eleFechaFin.value === '' && !chkAllDay.checked) {
+                    alert("Seleecione una fecha de fin");
+                } else if (tituloEvento.value === '') {
+                    alert("Ingrese un titulo para el evento")
+                } else {
+                    var ObjetoEvento = {
+                    id: Id += 1,
+                    title: tituloEvento.value,
+                    start: new Date(eleFechaIni.value),
+                    end:  (eleFechaFin.value != '') ? new Date(eleFechaFin.value) : '',
+                    allDay: chkAllDay.checked,
+                    backgroundColor: SelectedColor.value
+                    };
+                    calendar.addEvent(ObjetoEvento);
+                }
+            });
+        });        
+    </script>
+    <title>Calendario eventos</title>
+</head>
+<body>
+    <div id="calendar"></div>
+    <div class="FormAddEvent">
+        <input type="text" name="FechaIni" id="FechaIni">
+        <input type="text" name="FechaFin" id="FechaFin">
+        <input type="text" name="Titulo" id="Titulo" placeholder="titulo del evento">
+        <label for="TodoElDia">Todo el día</label>
+        <input type="checkbox" name="TodoElDia" id="TodoElDia">
+        <input type="color" name="ColorEvent" id="ColorEvent">
+        <button id="btnAgregar">AgregarEvento</button>
+    </div>
+</body>
+</html>

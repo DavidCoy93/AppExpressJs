@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+}
+
+#calendar {
+    margin: auto;
+    width: 50%;
+}
+
+.FormAddEvent {
+    margin: auto;
+    width: 50%;
+    display: grid;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+}
+
+.fc-event-title-container:hover{
+    background-color: yellow;
+    cursor: pointer;
+    color: black;
+}

@@ -5,6 +5,7 @@ const router = express.Router();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const fs = require('fs');
+const encriptador = require('./encriptador');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -12,8 +13,9 @@ app.use('/', router);
 app.use(cors({
     origin: '*'
 }));
-app.use(express.static(__dirname + '/css'));
-app.use(express.static(__dirname));
+
+app.use('/', express.static(__dirname));
+
 app.listen(1666, () => {
     console.log("El servidor se esta inicializando en el puerto 1666");
 });
@@ -56,5 +58,19 @@ router.post('/iniciar', function(req, res){
         console.log("El usuario no existe");
     }
     res.send(ObjPersona);
+});
+
+router.get('/encriptar/:Mensaje', function(req, res){
+    let MensajeEncriptado = encriptador.MensajeEncriptado(req.params.Mensaje);
+    res.send(MensajeEncriptado);
+});
+
+router.get('/desencriptar/:MensajeEncriptado', function(req, res){
+    let MensajeDesencriptado = encriptador.MensajeDesencriptado(req.params.MensajeEncriptado);
+    res.send(MensajeDesencriptado);
+});
+
+router.get('/calendario', function(req, res){
+    res.sendFile(path.join(__dirname + '/calendar.html'));
 });
 

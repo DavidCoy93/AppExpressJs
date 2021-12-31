@@ -11,7 +11,7 @@ body {
     margin-right: auto;
     margin-bottom: auto;
     margin-top: 3%;
-    width: 60%;
+    width: 80%;
 }
 
 .TablaPrincipal table {
@@ -86,18 +86,28 @@ body {
     border-color: black;
 }
 
+.fa-user-edit:hover {
+    color: red;
+    cursor: pointer;
+}
+
 .FormUsuario {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: auto;
     margin-top: 2%;
-    width: 60%;
+    width: 80%;
     display: grid;
     border-width: 2px;
     border-style: solid;
     border-color: black;
     border-radius: 5px;
     background-color: #aaaa;
+}
+
+.FormUsuario fieldset {
+    margin: auto;
+    width: 100%;
 }
 
 .FormUsuario input[type=text] {
@@ -108,7 +118,10 @@ body {
 }
 
 .FormUsuario input[type=text]:focus {
-    background-color: yellow;
+    animation-duration: 2s;
+    animation-name: parpadearFocus;
+    animation-iteration-count: 3;
+    
 }
 
 .FormUsuario button {
@@ -121,4 +134,17 @@ body {
 .FormUsuario button:hover {
     cursor: pointer;
 }
+
+@keyframes parpadearFocus {
+    0% {
+        background-color: whitesmoke;
+    }
+    50% {
+        background-color: yellow;
+    }
+    100% {
+        background-color: whitesmoke;
+    }
+}
+
 

@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="fontawesome-free-5.15.4-web/css/all.css">
     <script type="application/javascript">
 
         verificarAcceso();
@@ -32,23 +33,25 @@
                 <th>Apellido</th>
                 <th>Edad</th>
                 <th>TipoDePersona</th>
+                <th>Opciones</th>
             </thead>
             <tbody>
             </tbody>
         </table>
     </div>
 
-    <div class="FormUsuario">
-        <label for="NombrePersona">Nombre</label>
-        <input type="text" name="NombrePersona" id="NombrePersona">
-        <label for="ApellidoPesona">Apellido</label>
-        <input type="text" name="ApellidoPesona" id="ApellidoPesona">
-        <label for="EdadPesona">Edad</label>
-        <input type="text" name="EdadPesona" id="EdadPesona">
-        <button type="button">Agregar Fila</button> 
-    </div>
 
-    
+    <div class="FormUsuario">
+        <fieldset id="formUsuario">
+            <label for="NombrePersona">Nombre</label>
+            <input type="text" name="NombrePersona" id="NombrePersona">
+            <label for="ApellidoPesona">Apellido</label>
+            <input type="text" name="ApellidoPesona" id="ApellidoPesona">
+            <label for="EdadPesona">Edad</label>
+            <input type="text" name="EdadPesona" id="EdadPesona">
+            <button id="AddRow" type="button">Agregar Fila</button> 
+        </fieldset>
+    </div>
 
     <script type="application/javascript">
 
@@ -57,6 +60,7 @@
         this.UserApp = JSON.parse(strUser);
         this.FilasTabla = null;
         this.SelectedUser = null;
+        this.EditableRows = null;
 
         var Tabla1 = document.getElementById("Tabla1");
         var T1Tbody = Tabla1.getElementsByTagName("tbody")[0];
@@ -64,12 +68,13 @@
         var txtApellido = document.getElementById("ApellidoPesona");
         var txtEdad = document.getElementById("EdadPesona");
         var lblUserName = document.getElementById("UserName");
+        var btnAddRow = document.getElementById('AddRow');
+        var fieldSetUsuarios = document.getElementById('formUsuario');
         var Usuarios = [];
 
-        lblUserName.innerHTML = lblUserName.innerHTML + UserApp.User
+        lblUserName.innerHTML = lblUserName.innerHTML + UserApp.User;
 
         CargarDatos();
-        ShowNotification();
 
         function ObtenerIntervaloRepeticion() {
             var HoraActual = new Date();
@@ -97,6 +102,7 @@
                 var celda2 = row.insertCell(1);
                 var celda3 = row.insertCell(2);
                 var celda4 = row.insertCell(3);
+                var celda5 = row.insertCell(4);
 
                 var TipoPersona = (element.VaAPistearHoy === true ? "A toda madre" : "Es culo");
                 var Apodo = (element.Nombre === "David") ? "COY" : (element.Nombre === "Mauro") ? "MONKEY" : (element.Nombre === "Brayan") ? "GORILLA" : (element.Nombre)
@@ -106,10 +112,14 @@
                 var textNodeC3 = document.createTextNode(element.Edad);
                 var textNodeC4 = document.createTextNode(TipoPersona);
 
+                var EditIcon = document.createElement('i');
+                EditIcon.className = "fas fa-user-edit";
+
                 celda1.appendChild(textNodeC1);
                 celda2.appendChild(textNodeC2);
                 celda3.appendChild(textNodeC3);
                 celda4.appendChild(textNodeC4);
+                celda5.appendChild(EditIcon);
 
                 row.classList.add("NormalRow");
             });
@@ -117,6 +127,13 @@
             FilasTabla.forEach(function(fila, index){
                 fila.addEventListener('click', function() {
                     SeleccionarFila(this);
+                });
+            });
+            EditableRows = T1Tbody.querySelectorAll('.fa-user-edit');
+            EditableRows.forEach(function(element, index){
+                element.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    HabilitarFieldSet();
                 });
             });
             var xmlAnexos = '<root><Anexo letra="0" Valor="00"/><Anexo letra="1" Valor="01"/><Anexo letra="2" Valor="02"/><Anexo letra="3" Valor="03"/><Anexo letra="4" Valor="04"/><Anexo letra="5" Valor="05"/><Anexo letra="6" Valor="06"/><Anexo letra="7" Valor="07"/><Anexo letra="8" Valor="08"/><Anexo letra="9" Valor="09"/><Anexo letra="A" Valor="10"/><Anexo letra="B" Valor="11"/><Anexo letra="C" Valor="12"/><Anexo letra="D" Valor="13"/><Anexo letra="E" Valor="14"/><Anexo letra="F" Valor="15"/><Anexo letra="G" Valor="16"/><Anexo letra="H" Valor="17"/><Anexo letra="I" Valor="18"/><Anexo letra="J" Valor="19"/><Anexo letra="K" Valor="20"/><Anexo letra="L" Valor="21"/><Anexo letra="M" Valor="22"/><Anexo letra="N" Valor="23"/><Anexo letra="&amp;" Valor="24"/><Anexo letra="O" Valor="25"/><Anexo letra="P" Valor="26"/><Anexo letra="Q" Valor="27"/><Anexo letra="R" Valor="28"/><Anexo letra="S" Valor="29"/><Anexo letra="T" Valor="30"/><Anexo letra="U" Valor="31"/><Anexo letra="V" Valor="32"/><Anexo letra="W" Valor="33"/><Anexo letra="X" Valor="34"/><Anexo letra="Y" Valor="35"/><Anexo letra="Z" Valor="36"/><Anexo letra=" " Valor="37"/><Anexo letra="Ñ" Valor="38"/></root>';
@@ -136,11 +153,12 @@
         }
 
         function SeleccionarFila(fila) {
+            fieldSetUsuarios.disabled = true;
             for (let i = 0; i < T1Tbody.rows.length; i++) {
                 if (fila.rowIndex === T1Tbody.rows[i].rowIndex) {
                     fila.classList.remove("NormalRow");
                     fila.classList.add("SelectedRow");
-                    SelectedUser = ConvertRowToObject(fila.innerText);
+                    SelectedUser = ConvertRowToObject(fila.innerText, fila.rowIndex);
                     SetValuesInput(SelectedUser);
                 } else {
                     T1Tbody.rows[i].classList.remove("SelectedRow");
@@ -178,14 +196,73 @@
             txtEdad.value = User.Edad;
         }
 
-        function ConvertRowToObject(UserInfo) {
+        function ConvertRowToObject(UserInfo, indice = null) {
             var SplitInfo = UserInfo.split('\t');
             var UserSelect = {
                 Nombre: SplitInfo[0],
                 Apellido: SplitInfo[1],
-                Edad: parseInt(SplitInfo[2]) 
+                Edad: parseInt(SplitInfo[2]),
+                RowIndex: indice 
             };
             return UserSelect;
+        }
+
+        btnAddRow.addEventListener('click', function(e){
+            var textoBoton = e.srcElement.innerHTML;
+            AddEditUser(textoBoton);
+        });
+
+        function AddEditUser(descripcion, index = null) {
+            if (txtNombre.value === '') {
+                txtNombre.focus();
+            } else if (txtApellido.value === ''){
+                txtApellido.focus();
+            } else if (txtEdad.value === ''){
+                txtEdad.focus();
+            } else {
+
+                if (descripcion.includes('Agregar')) {
+                    var ObjUser = {
+                        Usuarios: [
+                            {
+                                Nombre: txtNombre.value,
+                                Apellido: txtApellido.value,
+                                Edad: parseInt(txtEdad.value),
+                                BebidaFavorita: '',
+                                VaAPistearHoy: false,
+                                Password: ''
+                            }
+                        ]
+                    }
+                    crearFilas(ObjUser);
+                } else {
+                    var celdasFila = T1Tbody.rows[SelectedUser.RowIndex - 1].cells;
+                    for (let i = 0; i < celdasFila.length; i++) {
+                        if(i === 0) {
+                            celdasFila[i].innerHTML = txtNombre.value;
+                        }
+
+                        if(i === 1) {
+                            celdasFila[i].innerHTML = txtApellido.value;
+                        }
+
+                        if(i === 2) {
+                            celdasFila[i].innerHTML = txtEdad.value;
+                        }
+
+                        if(i === 3) {
+                            break;
+                        }
+                    }
+                }
+                
+            }
+        }
+
+        function HabilitarFieldSet() {
+            fieldSetUsuarios.disabled = false;
+            btnAddRow.innerHTML = 'Editar usuario';
+            btnAddRow.style.backgroundColor = 'yellow';
         }
 
     </script>
