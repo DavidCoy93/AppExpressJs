@@ -11,7 +11,9 @@
     <script src="libs/fullcalendar-5.10.1/lib/locales/es-us.js"></script>
     <script src="libs/flatpickr/flatpickr.js"></script>
     <script>
+
         document.addEventListener('DOMContentLoaded', function() {
+
             var calendarElement = document.getElementById("calendar");
             var eleFechaIni = document.getElementById("FechaIni");
             var eleFechaFin = document.getElementById("FechaFin");
@@ -91,8 +93,22 @@
                     } else {
                         alert("Esta bien pendejo culebra");
                     }
+                },
+                events: function(info, success, fail) {
+                    fetch(window.location.origin + '/eventos/1', {
+                        method: "GET",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(resp => resp.json()
+                    ).catch(err => {
+                        fail(err);
+                    }
+                    ).then(data => {
+                        success(data);
+                    }
+                    )
                 }
-
             });
             calendar.render();
 
@@ -115,6 +131,7 @@
                     backgroundColor: SelectedColor.value
                     };
                     calendar.addEvent(ObjetoEvento);
+                    calendar.refetchEvents();
                 }
             });
         });        

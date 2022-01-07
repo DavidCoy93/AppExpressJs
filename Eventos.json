@@ -1,6 +1,91 @@
 [
     {
+        "id": 1,
         "title": "Pendejada1",
-        "start": ""
+        "start": "2022-01-06T11:00:00",
+        "end": "2022-01-06T12:00:00",
+        "editable": false,
+        "extendedProps": {
+            "sala": 1,
+            "IdUsuario": "2245"
+        }
+    },
+    {
+        "id": 2,
+        "title": "Pendejada2",
+        "start": "2022-01-07T11:00:00",
+        "end": "2022-01-07T12:00:00",
+        "editable": false,
+        "extendedProps": {
+            "sala": 1,
+            "IdUsuario": "2245"
+        }
+    },
+    {
+        "id": 3,
+        "title": "Pendejada3",
+        "start": "2022-01-08T11:00:00",
+        "end": "2022-01-08T12:00:00",
+        "editable": false,
+        "extendedProps": {
+            "sala": 1,
+            "IdUsuario": "2445"
+        }
+    },
+    {
+        "id": 4,
+        "title": "Pendejada4",
+        "start": "2022-01-09T11:00:00",
+        "end": "2022-01-09T12:00:00",
+        "editable": false,
+        "extendedProps": {
+            "sala": 1,
+            "IdUsuario": "2445"
+        }
+    },
+    {
+        "id": 5,
+        "title": "Pendejada5",
+        "start": "2022-01-31T11:00:00",
+        "end": "2022-01-31T12:00:00",
+        "editable": false,
+        "extendedProps": {
+            "sala": 1,
+            "IdUsuario": "2445"
+        }
+    },
+    {
+        "id": 1,
+        "title": "Pendejada1",
+        "start": "2022-01-06T11:00:00",
+        "end": "2022-01-06T12:00:00",
+        "editable":false,
+        "extendedProps": {
+            "sala": 2,
+            "IdUsuario": "2245"
+        }
+    },
+    {
+        "id": 2,
+        "title": "Pendejada2",
+        "start": "2022-01-07T11:00:00",
+        "end": "2022-01-07T12:00:00",
+        "editable":false,
+        "extendedProps": {
+            "sala": 2,
+            "IdUsuario": "2445"
+        }
+    },
+    {
+        "id": 3,
+        "title": "Pendejada3",
+        "start": "2022-01-08T11:00:00",
+        "end": "2022-01-08T12:00:00",
+        "editable":false,
+        "extendedProps": {
+            "sala": 2,
+            "IdUsuario": "2445"
+        }
     }
+    
 ]

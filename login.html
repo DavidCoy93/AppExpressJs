@@ -6,10 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/login.css">
     <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="libs/fontawesome-free-5.15.4-web/css/all.css">
     <title>Iniciar sesión</title>
 </head>
-<body>
+<body class="LigthMode">
+    <i id="modeview" title="Modo Obscuro" class="fas fa-moon"></i>
     <div class="CentrarDiv">
+        <div>
+            <img src="images/login.png" id="ImgLogin" alt="">
+        </div>
         <div id="divInpUser">
             <label for="usuario">Ingrese usuario</label>
             <input type="text" name="usuario" id="usuario">
@@ -29,7 +34,9 @@
         var ElementDivPass = document.getElementById("divInpPass");
         var ElementUser = document.getElementById("usuario");
         var ElementPass = document.getElementById("psw");
-
+        var ImagenLogin = document.getElementById("ImgLogin");
+        var IconoCambiarMode = document.getElementById("modeview");
+        var eleBody = document.getElementsByTagName('body')[0];
 
         this.inpUser = "";
         this.inpPass = "";
@@ -47,6 +54,22 @@
         ElementDivPass.appendChild(validatorPass);
         ElementPass.after(validatorPass);
         validatorPass.style.display = 'none';
+
+        IconoCambiarMode.addEventListener('click', function() {
+            if(IconoCambiarMode.classList.contains("fa-moon")) {
+                IconoCambiarMode.classList.remove('fa-moon');
+                IconoCambiarMode.classList.add("fa-sun");
+                IconoCambiarMode.title = 'Modo Claro';
+                eleBody.classList.remove("LigthMode");
+                eleBody.classList.add("DarkMode");
+            } else {
+                IconoCambiarMode.classList.add("fa-moon");
+                IconoCambiarMode.classList.remove("fa-sun");
+                IconoCambiarMode.title = 'Modo Obscuro';
+                eleBody.classList.remove("DarkMode");
+                eleBody.classList.add("LigthMode");
+            }
+        });
 
         // chrome.webRequest.onBeforeRequest.addListener(
         //     function(e) {

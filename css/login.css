@@ -1,17 +1,40 @@
+* {
+    box-sizing: border-box;
+}
+
+i {
+    margin-left: 95%;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+i:hover {
+    cursor: pointer;
+}
+
 .CentrarDiv {
-    margin: auto;
-    width: 100%;
+    margin-top: 25%;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
 }
 
 .CentrarDiv div {
     margin: auto;
+    width: 40%;
+    
+}
+
+.CentrarDiv div img {
+    margin-left: 40%;
+    margin-right: 40%;
     width: 20%;
-    border: 2px solid black;
 }
 
 .CentrarDiv div input {
-    width: 97.5%;
-    background-color: lightyellow;
+    width: 100%;
 }
 
 .CentrarDiv div button {
@@ -25,5 +48,31 @@ p {
     font-size: 12px;
     font-weight: bold;
     color: red;
+}
+
+
+.DarkMode {
+    background-color: black;
+    color: white;
+}
+
+.DarkMode .CentrarDiv div {
+    border: 2px solid white;
+}
+
+.DarkMode p {
+    background-color: white;
+}
+
+.LigthMode {
+    background-color: white;
+    color: black;
+}
+
+.LigthMode .CentrarDiv div {
+    border: 2px solid black;
+} 
+
+.LigthMode p {
     background-color: black;
 }
