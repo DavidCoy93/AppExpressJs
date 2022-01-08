@@ -38,6 +38,14 @@ router.get('/login', function(req, res){
     res.sendFile(path.join(__dirname + '/login.html'));
 });
 
+router.get('/calendario', function(req, res){
+    res.sendFile(path.join(__dirname + '/calendar.html'));
+});
+
+router.get('/pruebadiv', function(req, res){
+    res.sendFile(path.join(__dirname + '/PruebaDivs.html'));
+});
+
 router.get('/personas', function(req, res){
     ArrayUsuarios = usuario.ObtenerUsuarios();
     res.send(ArrayUsuarios);
@@ -76,10 +84,6 @@ router.get('/encriptar/:Mensaje', function(req, res){
 router.get('/desencriptar/:MensajeEncriptado', function(req, res){
     let MensajeDesencriptado = encriptador.MensajeDesencriptado(req.params.MensajeEncriptado);
     res.send(MensajeDesencriptado);
-});
-
-router.get('/calendario', function(req, res){
-    res.sendFile(path.join(__dirname + '/calendar.html'));
 });
 
 router.post('/agregarPersona', function(req, res){

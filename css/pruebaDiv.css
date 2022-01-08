@@ -1,0 +1,59 @@
+* {
+    box-sizing: content-box;
+}
+
+.contenedor {
+    margin: auto;
+    top: 0%;
+    bottom: 0%;
+    right: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.SideNavMenu {
+    height: 100%;
+    width: 80px;
+    background-color: skyblue;
+    position: absolute;
+    transition-property: width;
+    transition-duration: 1s;
+}
+
+.SideNavMenu:hover {
+    width: 100px;
+    background-color: burlywood;
+}
+
+.Contenido {
+    margin-left: 80px;
+    width: calc(100% - 80px);
+    height: 100%;
+}
+
+.Contenido100 {
+    width: 100%;
+}
+
+.TablaPrincipal {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-top: 30%;
+    width: 80%;
+    background-color: transparent;
+}
+
+.TablaPrincipal table {
+    margin: auto;
+    width: 100%;
+    border-collapse: collapse;
+    border: solid 1px black;
+}
+
+
+.TablaPrincipal table td, th {
+    text-align: center;
+}

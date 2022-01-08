@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/pruebaDiv.css">
+    <title>Pendejez</title>
+</head>
+<body>
+    <div class="contenedor"> 
+        <div class="SideNavMenu">
+
+        </div>
+        <div class="Contenido">
+            <button id="btnMenu">Menu</button>
+            <div class="TablaPrincipal">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Edad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Luis</td>
+                            <td>Lopez</td>
+                            <td>33</td>
+                        </tr>
+                        <tr>
+                            <td>Jorge</td>
+                            <td>Perez</td>
+                            <td>56</td>
+                        </tr>
+                        <tr>
+                            <td>Javier</td>
+                            <td>Orozco</td>
+                            <td>36</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="application/javascript">
+        var SideMenu = document.querySelector('.SideNavMenu');
+        var ContenidoApp = document.querySelector('.Contenido');
+
+        var MostrarMenuEvt = new CustomEvent('showMenu');
+        var OcultarMenuEvt = new CustomEvent('hideMenu');
+
+        document.addEventListener('showMenu', () => {
+            SideMenu.style.display = '';
+            ContenidoApp.classList.remove('Contenido100');
+            ContenidoApp.classList.add('Contenido');
+        });
+
+        document.addEventListener('hideMenu', () => {
+            SideMenu.style.display = 'none';
+            ContenidoApp.classList.remove('Contenido');
+            ContenidoApp.classList.add('Contenido100');
+        });
+
+        document.addEventListener('mousemove', function(e){
+            var screenXSideMenu = (window.screenX+80);
+            if(e.screenX <= screenXSideMenu) {
+                document.dispatchEvent(MostrarMenuEvt);
+            } else {
+                document.dispatchEvent(OcultarMenuEvt);
+            }
+        });
+    </script>
+</body>
+</html>
