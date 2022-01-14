@@ -56,25 +56,39 @@ body {
 .infoUser {
     margin: auto;
     width: 100%;
+    display: grid;
+    grid-template-areas: "nombre nombre"
+                         "ciudad cerrar";
+    grid-template-rows: 40% 40%;
+    grid-template-columns: 70% 30%;
 }
 
 .infoUser p {
+    grid-area: nombre;
     background-color: aquamarine;
     color: black;
     font-size: 20px;
     font-weight: bold;
     text-align: center;
     margin: auto;
+    align-self: center;
 }
 
 .infoUser button {
+    grid-area: cerrar;
     background-color: lightseagreen;
     color: black;
     text-align: center;
     border-radius: 15px;
     margin: auto;
-    float: right;
     cursor: pointer;
+    align-self: end;
+}
+
+.infoUser span {
+    grid-area: ciudad;
+    align-self: start;
+    margin-left: 14%;
 }
 
 .SelectedRow {

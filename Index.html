@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="libs/fontawesome-free-5.15.4-web/css/all.css">
+    <link rel="stylesheet" href="libs/flag-icons-main/css/flag-icons.css">
     <script type="application/javascript">
 
         verificarAcceso();
@@ -171,6 +172,29 @@
             }
         }
 
+        function ObtenerPosicionActual() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition((posicion) => {
+                    var url = 'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + posicion.coords.latitude + '&longitude='  + posicion.coords.longitude + '&localityLanguage=en';
+                    fetch(url).then(
+                        (resp) => resp.json()
+                    ).then((data) => {
+                        var classCountryCode = "fi-" + data.countryCode;
+                        var countryIcon = document.createElement('span');
+                        countryIcon.classList.add("fi", classCountryCode.toLowerCase());
+                        // var ciudad = document.createTextNode(data.localityInfo.administrative[2].name + ', ' +data.localityInfo.administrative[0].name)
+                        // countryIcon.appendChild(ciudad);
+                        document.querySelector(".infoUser").appendChild(countryIcon);
+
+                    }
+                    )
+
+                });
+            } else {
+                console.log("El navegador no soporta la geolocalización");
+            }
+        }
+
         function SeleccionarFila(fila) {
             for (let i = 0; i < T1Tbody.rows.length; i++) {
                 if (fila.rowIndex === T1Tbody.rows[i].rowIndex) {
@@ -286,6 +310,10 @@
             btnAddRow.innerHTML = 'Editar usuario';
             btnAddRow.style.backgroundColor = 'yellow';
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            ObtenerPosicionActual();
+        });
 
     </script>
 </body>
