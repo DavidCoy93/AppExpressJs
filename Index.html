@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="libs/fontawesome-free-5.15.4-web/css/all.css">
     <link rel="stylesheet" href="libs/flag-icons-main/css/flag-icons.css">
+    <link rel="stylesheet" href="libs/js-simple-loader-main/loader.css">
+    <script src="libs/js-simple-loader-main/loader.js"></script>
     <script type="application/javascript">
 
         verificarAcceso();
@@ -70,6 +72,8 @@
             }
         });
         
+        //#region Variables
+
         this.UserApp = JSON.parse(strUser);
         this.FilasTabla = null;
         this.SelectedUser = null;
@@ -85,10 +89,12 @@
         var fieldSetUsuarios = document.getElementById('formUsuario');
         var Usuarios = [];
 
+        //#endregion
+
         lblUserName.innerHTML = lblUserName.innerHTML + UserApp.User;
 
         CargarDatos();
-
+        
         function ObtenerIntervaloRepeticion() {
             var HoraActual = new Date();
             var SiguienteHoraPunto = new Date(HoraActual.getFullYear(), HoraActual.getMonth(), HoraActual.getDate(), HoraActual.getHours() + 1, 0, 0, 0);
@@ -96,7 +102,6 @@
         }
 
         function CargarDatos() {
-
             fetch('http://localhost:1666/personas', {
                 method: 'GET',
                 headers:{
@@ -107,6 +112,11 @@
             .then(data =>  crearFilas(data));
         }
 
+        /**
+         * Crea la tabla de los usuarios a partir de la respuesta del endpoint
+         * @param { array } filas Array de usuarios
+         * @return
+        */
         function crearFilas(filas) {
             if(T1Tbody.rows.length > 0) {
                 for (let i = 0; i < T1Tbody.rows.length;) {
@@ -172,8 +182,12 @@
             }
         }
 
+        /**
+         * Obtiene la posición actual del usuario
+         */
         function ObtenerPosicionActual() {
             if ("geolocation" in navigator) {
+                Loader.open();
                 navigator.geolocation.getCurrentPosition((posicion) => {
                     var url = 'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + posicion.coords.latitude + '&longitude='  + posicion.coords.longitude + '&localityLanguage=en';
                     fetch(url).then(
@@ -185,6 +199,7 @@
                         // var ciudad = document.createTextNode(data.localityInfo.administrative[2].name + ', ' +data.localityInfo.administrative[0].name)
                         // countryIcon.appendChild(ciudad);
                         document.querySelector(".infoUser").appendChild(countryIcon);
+                        Loader.close();
 
                     }
                     )
